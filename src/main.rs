@@ -51,7 +51,7 @@ struct HeroPricing;
 #[command]
 async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 
-    // TODO: Need to better handle errors
+    // TODO: Need to better handle errors to send in discord
     let user_input = msg.content[4..].trim().parse::<i64>().ok().expect("Enter a valid ID");
 
     // The shape of the variables expected by the query.
