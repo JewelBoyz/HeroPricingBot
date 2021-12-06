@@ -20,11 +20,13 @@ use graphql_client::*;
 #[allow(unused_imports)]
 use serde_derive::{Deserialize, Serialize};
 
+use std::env;
+
 // 1. We have to make our main function asynchronous
 #[tokio::main]
 async fn main() {
-    // Grab our bot token
-    let token = "";
+    // Grab our bot token from env
+    let token = env::var("DISCORD_TOKEN").expect("token");
 
     let framework = StandardFramework::new().configure(|c| {
         c.prefix("!")
