@@ -1,0 +1,9 @@
+query DFKQuery($id: Int!) {
+  hero(id: $id) {
+    id
+    summons
+    rarity
+    profession
+    level
+	}
+}

@@ -1,0 +1,1716 @@
+directive @entity on OBJECT
+
+directive @derivedFrom(field: String) on FIELD_DEFINITION
+
+directive @subgraphId(id: String) on OBJECT
+
+type _Block_ {
+  """The hash of the block"""
+  hash: Bytes
+
+  """The block number"""
+  number: Int!
+}
+
+"""The type for the top-level _meta field"""
+type _Meta_ {
+  """
+  Information about a specific subgraph block. The hash of the block
+  will be null if the _meta field has a block constraint that asks for
+  a block number. It will be filled if the _meta field has no block constraint
+  and therefore asks for the latest  block
+  
+  """
+  block: _Block_!
+
+  """The deployment ID"""
+  deployment: String!
+
+  """If `true`, the subgraph encountered indexing errors at some past block"""
+  hasIndexingErrors: Boolean!
+}
+
+enum _SubgraphErrorPolicy_ {
+  """Data will be returned even if the subgraph has indexing errors"""
+  allow
+
+  """
+  If the subgraph has indexing errors, data will be omitted. The default.
+  """
+  deny
+}
+
+type AssistingAuction {
+  id: ID!
+  seller: Profile
+  tokenId: Hero
+  startingPrice: BigInt!
+  endingPrice: BigInt!
+  duration: BigInt!
+  startedAt: BigInt!
+  winner: Profile
+  endedAt: BigInt
+  open: Boolean!
+  purchasePrice: BigInt
+}
+
+input AssistingAuction_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  seller: String
+  seller_not: String
+  seller_gt: String
+  seller_lt: String
+  seller_gte: String
+  seller_lte: String
+  seller_in: [String!]
+  seller_not_in: [String!]
+  seller_contains: String
+  seller_not_contains: String
+  seller_starts_with: String
+  seller_not_starts_with: String
+  seller_ends_with: String
+  seller_not_ends_with: String
+  tokenId: String
+  tokenId_not: String
+  tokenId_gt: String
+  tokenId_lt: String
+  tokenId_gte: String
+  tokenId_lte: String
+  tokenId_in: [String!]
+  tokenId_not_in: [String!]
+  tokenId_contains: String
+  tokenId_not_contains: String
+  tokenId_starts_with: String
+  tokenId_not_starts_with: String
+  tokenId_ends_with: String
+  tokenId_not_ends_with: String
+  startingPrice: BigInt
+  startingPrice_not: BigInt
+  startingPrice_gt: BigInt
+  startingPrice_lt: BigInt
+  startingPrice_gte: BigInt
+  startingPrice_lte: BigInt
+  startingPrice_in: [BigInt!]
+  startingPrice_not_in: [BigInt!]
+  endingPrice: BigInt
+  endingPrice_not: BigInt
+  endingPrice_gt: BigInt
+  endingPrice_lt: BigInt
+  endingPrice_gte: BigInt
+  endingPrice_lte: BigInt
+  endingPrice_in: [BigInt!]
+  endingPrice_not_in: [BigInt!]
+  duration: BigInt
+  duration_not: BigInt
+  duration_gt: BigInt
+  duration_lt: BigInt
+  duration_gte: BigInt
+  duration_lte: BigInt
+  duration_in: [BigInt!]
+  duration_not_in: [BigInt!]
+  startedAt: BigInt
+  startedAt_not: BigInt
+  startedAt_gt: BigInt
+  startedAt_lt: BigInt
+  startedAt_gte: BigInt
+  startedAt_lte: BigInt
+  startedAt_in: [BigInt!]
+  startedAt_not_in: [BigInt!]
+  winner: String
+  winner_not: String
+  winner_gt: String
+  winner_lt: String
+  winner_gte: String
+  winner_lte: String
+  winner_in: [String!]
+  winner_not_in: [String!]
+  winner_contains: String
+  winner_not_contains: String
+  winner_starts_with: String
+  winner_not_starts_with: String
+  winner_ends_with: String
+  winner_not_ends_with: String
+  endedAt: BigInt
+  endedAt_not: BigInt
+  endedAt_gt: BigInt
+  endedAt_lt: BigInt
+  endedAt_gte: BigInt
+  endedAt_lte: BigInt
+  endedAt_in: [BigInt!]
+  endedAt_not_in: [BigInt!]
+  open: Boolean
+  open_not: Boolean
+  open_in: [Boolean!]
+  open_not_in: [Boolean!]
+  purchasePrice: BigInt
+  purchasePrice_not: BigInt
+  purchasePrice_gt: BigInt
+  purchasePrice_lt: BigInt
+  purchasePrice_gte: BigInt
+  purchasePrice_lte: BigInt
+  purchasePrice_in: [BigInt!]
+  purchasePrice_not_in: [BigInt!]
+}
+
+enum AssistingAuction_orderBy {
+  id
+  seller
+  tokenId
+  startingPrice
+  endingPrice
+  duration
+  startedAt
+  winner
+  endedAt
+  open
+  purchasePrice
+}
+
+scalar BigDecimal
+
+scalar BigInt
+
+input Block_height {
+  hash: Bytes
+  number: Int
+}
+
+scalar Bytes
+
+type Hero {
+  id: ID!
+  numberId: BigInt!
+  owner: Profile
+  creator: Profile
+  statGenes: BigInt!
+  visualGenes: BigInt!
+  rarity: Int!
+  shiny: Boolean!
+  generation: Int!
+  firstName: Int!
+  lastName: Int!
+  shinyStyle: Int!
+  mainClass: String!
+  subClass: String!
+  summonedTime: BigInt!
+  nextSummonTime: BigInt!
+  summonerId: Hero
+  assistantId: Hero
+  summons: Int!
+  maxSummons: Int!
+  staminaFullAt: BigInt!
+  hpFullAt: BigInt!
+  mpFullAt: BigInt!
+  level: Int!
+  xp: BigInt!
+  currentQuest: Bytes!
+  sp: Int!
+  status: String!
+  strength: Int!
+  intelligence: Int!
+  wisdom: Int!
+  luck: Int!
+  agility: Int!
+  vitality: Int!
+  endurance: Int!
+  dexterity: Int!
+  hp: Int!
+  mp: Int!
+  stamina: Int!
+  strengthGrowthP: Int!
+  intelligenceGrowthP: Int!
+  wisdomGrowthP: Int!
+  luckGrowthP: Int!
+  agilityGrowthP: Int!
+  vitalityGrowthP: Int!
+  enduranceGrowthP: Int!
+  dexterityGrowthP: Int!
+  strengthGrowthS: Int!
+  intelligenceGrowthS: Int!
+  wisdomGrowthS: Int!
+  luckGrowthS: Int!
+  agilityGrowthS: Int!
+  vitalityGrowthS: Int!
+  enduranceGrowthS: Int!
+  dexterityGrowthS: Int!
+  hpSmGrowth: Int!
+  hpRgGrowth: Int!
+  hpLgGrowth: Int!
+  mpSmGrowth: Int!
+  mpRgGrowth: Int!
+  mpLgGrowth: Int!
+  mining: Int!
+  gardening: Int!
+  foraging: Int!
+  fishing: Int!
+  profession: String!
+  passive1: String!
+  passive2: String!
+  active1: String!
+  active2: String!
+  statBoost1: String!
+  statBoost2: String!
+  statsUnknown1: String!
+  element: String!
+  statsUnknown2: String!
+  gender: String!
+  headAppendage: String!
+  backAppendage: String!
+  background: String!
+  hairStyle: String!
+  hairColor: String!
+  visualUnknown1: String!
+  eyeColor: String!
+  skinColor: String!
+  appendageColor: String!
+  backAppendageColor: String!
+  visualUnknown2: String!
+  assistingAuction: AssistingAuction
+  assistingPrice: BigInt
+  saleAuction: SaleAuction
+  salePrice: BigInt
+  privateAuctionProfile: Profile
+}
+
+input Hero_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  numberId: BigInt
+  numberId_not: BigInt
+  numberId_gt: BigInt
+  numberId_lt: BigInt
+  numberId_gte: BigInt
+  numberId_lte: BigInt
+  numberId_in: [BigInt!]
+  numberId_not_in: [BigInt!]
+  owner: String
+  owner_not: String
+  owner_gt: String
+  owner_lt: String
+  owner_gte: String
+  owner_lte: String
+  owner_in: [String!]
+  owner_not_in: [String!]
+  owner_contains: String
+  owner_not_contains: String
+  owner_starts_with: String
+  owner_not_starts_with: String
+  owner_ends_with: String
+  owner_not_ends_with: String
+  creator: String
+  creator_not: String
+  creator_gt: String
+  creator_lt: String
+  creator_gte: String
+  creator_lte: String
+  creator_in: [String!]
+  creator_not_in: [String!]
+  creator_contains: String
+  creator_not_contains: String
+  creator_starts_with: String
+  creator_not_starts_with: String
+  creator_ends_with: String
+  creator_not_ends_with: String
+  statGenes: BigInt
+  statGenes_not: BigInt
+  statGenes_gt: BigInt
+  statGenes_lt: BigInt
+  statGenes_gte: BigInt
+  statGenes_lte: BigInt
+  statGenes_in: [BigInt!]
+  statGenes_not_in: [BigInt!]
+  visualGenes: BigInt
+  visualGenes_not: BigInt
+  visualGenes_gt: BigInt
+  visualGenes_lt: BigInt
+  visualGenes_gte: BigInt
+  visualGenes_lte: BigInt
+  visualGenes_in: [BigInt!]
+  visualGenes_not_in: [BigInt!]
+  rarity: Int
+  rarity_not: Int
+  rarity_gt: Int
+  rarity_lt: Int
+  rarity_gte: Int
+  rarity_lte: Int
+  rarity_in: [Int!]
+  rarity_not_in: [Int!]
+  shiny: Boolean
+  shiny_not: Boolean
+  shiny_in: [Boolean!]
+  shiny_not_in: [Boolean!]
+  generation: Int
+  generation_not: Int
+  generation_gt: Int
+  generation_lt: Int
+  generation_gte: Int
+  generation_lte: Int
+  generation_in: [Int!]
+  generation_not_in: [Int!]
+  firstName: Int
+  firstName_not: Int
+  firstName_gt: Int
+  firstName_lt: Int
+  firstName_gte: Int
+  firstName_lte: Int
+  firstName_in: [Int!]
+  firstName_not_in: [Int!]
+  lastName: Int
+  lastName_not: Int
+  lastName_gt: Int
+  lastName_lt: Int
+  lastName_gte: Int
+  lastName_lte: Int
+  lastName_in: [Int!]
+  lastName_not_in: [Int!]
+  shinyStyle: Int
+  shinyStyle_not: Int
+  shinyStyle_gt: Int
+  shinyStyle_lt: Int
+  shinyStyle_gte: Int
+  shinyStyle_lte: Int
+  shinyStyle_in: [Int!]
+  shinyStyle_not_in: [Int!]
+  mainClass: String
+  mainClass_not: String
+  mainClass_gt: String
+  mainClass_lt: String
+  mainClass_gte: String
+  mainClass_lte: String
+  mainClass_in: [String!]
+  mainClass_not_in: [String!]
+  mainClass_contains: String
+  mainClass_not_contains: String
+  mainClass_starts_with: String
+  mainClass_not_starts_with: String
+  mainClass_ends_with: String
+  mainClass_not_ends_with: String
+  subClass: String
+  subClass_not: String
+  subClass_gt: String
+  subClass_lt: String
+  subClass_gte: String
+  subClass_lte: String
+  subClass_in: [String!]
+  subClass_not_in: [String!]
+  subClass_contains: String
+  subClass_not_contains: String
+  subClass_starts_with: String
+  subClass_not_starts_with: String
+  subClass_ends_with: String
+  subClass_not_ends_with: String
+  summonedTime: BigInt
+  summonedTime_not: BigInt
+  summonedTime_gt: BigInt
+  summonedTime_lt: BigInt
+  summonedTime_gte: BigInt
+  summonedTime_lte: BigInt
+  summonedTime_in: [BigInt!]
+  summonedTime_not_in: [BigInt!]
+  nextSummonTime: BigInt
+  nextSummonTime_not: BigInt
+  nextSummonTime_gt: BigInt
+  nextSummonTime_lt: BigInt
+  nextSummonTime_gte: BigInt
+  nextSummonTime_lte: BigInt
+  nextSummonTime_in: [BigInt!]
+  nextSummonTime_not_in: [BigInt!]
+  summonerId: String
+  summonerId_not: String
+  summonerId_gt: String
+  summonerId_lt: String
+  summonerId_gte: String
+  summonerId_lte: String
+  summonerId_in: [String!]
+  summonerId_not_in: [String!]
+  summonerId_contains: String
+  summonerId_not_contains: String
+  summonerId_starts_with: String
+  summonerId_not_starts_with: String
+  summonerId_ends_with: String
+  summonerId_not_ends_with: String
+  assistantId: String
+  assistantId_not: String
+  assistantId_gt: String
+  assistantId_lt: String
+  assistantId_gte: String
+  assistantId_lte: String
+  assistantId_in: [String!]
+  assistantId_not_in: [String!]
+  assistantId_contains: String
+  assistantId_not_contains: String
+  assistantId_starts_with: String
+  assistantId_not_starts_with: String
+  assistantId_ends_with: String
+  assistantId_not_ends_with: String
+  summons: Int
+  summons_not: Int
+  summons_gt: Int
+  summons_lt: Int
+  summons_gte: Int
+  summons_lte: Int
+  summons_in: [Int!]
+  summons_not_in: [Int!]
+  maxSummons: Int
+  maxSummons_not: Int
+  maxSummons_gt: Int
+  maxSummons_lt: Int
+  maxSummons_gte: Int
+  maxSummons_lte: Int
+  maxSummons_in: [Int!]
+  maxSummons_not_in: [Int!]
+  staminaFullAt: BigInt
+  staminaFullAt_not: BigInt
+  staminaFullAt_gt: BigInt
+  staminaFullAt_lt: BigInt
+  staminaFullAt_gte: BigInt
+  staminaFullAt_lte: BigInt
+  staminaFullAt_in: [BigInt!]
+  staminaFullAt_not_in: [BigInt!]
+  hpFullAt: BigInt
+  hpFullAt_not: BigInt
+  hpFullAt_gt: BigInt
+  hpFullAt_lt: BigInt
+  hpFullAt_gte: BigInt
+  hpFullAt_lte: BigInt
+  hpFullAt_in: [BigInt!]
+  hpFullAt_not_in: [BigInt!]
+  mpFullAt: BigInt
+  mpFullAt_not: BigInt
+  mpFullAt_gt: BigInt
+  mpFullAt_lt: BigInt
+  mpFullAt_gte: BigInt
+  mpFullAt_lte: BigInt
+  mpFullAt_in: [BigInt!]
+  mpFullAt_not_in: [BigInt!]
+  level: Int
+  level_not: Int
+  level_gt: Int
+  level_lt: Int
+  level_gte: Int
+  level_lte: Int
+  level_in: [Int!]
+  level_not_in: [Int!]
+  xp: BigInt
+  xp_not: BigInt
+  xp_gt: BigInt
+  xp_lt: BigInt
+  xp_gte: BigInt
+  xp_lte: BigInt
+  xp_in: [BigInt!]
+  xp_not_in: [BigInt!]
+  currentQuest: Bytes
+  currentQuest_not: Bytes
+  currentQuest_in: [Bytes!]
+  currentQuest_not_in: [Bytes!]
+  currentQuest_contains: Bytes
+  currentQuest_not_contains: Bytes
+  sp: Int
+  sp_not: Int
+  sp_gt: Int
+  sp_lt: Int
+  sp_gte: Int
+  sp_lte: Int
+  sp_in: [Int!]
+  sp_not_in: [Int!]
+  status: String
+  status_not: String
+  status_gt: String
+  status_lt: String
+  status_gte: String
+  status_lte: String
+  status_in: [String!]
+  status_not_in: [String!]
+  status_contains: String
+  status_not_contains: String
+  status_starts_with: String
+  status_not_starts_with: String
+  status_ends_with: String
+  status_not_ends_with: String
+  strength: Int
+  strength_not: Int
+  strength_gt: Int
+  strength_lt: Int
+  strength_gte: Int
+  strength_lte: Int
+  strength_in: [Int!]
+  strength_not_in: [Int!]
+  intelligence: Int
+  intelligence_not: Int
+  intelligence_gt: Int
+  intelligence_lt: Int
+  intelligence_gte: Int
+  intelligence_lte: Int
+  intelligence_in: [Int!]
+  intelligence_not_in: [Int!]
+  wisdom: Int
+  wisdom_not: Int
+  wisdom_gt: Int
+  wisdom_lt: Int
+  wisdom_gte: Int
+  wisdom_lte: Int
+  wisdom_in: [Int!]
+  wisdom_not_in: [Int!]
+  luck: Int
+  luck_not: Int
+  luck_gt: Int
+  luck_lt: Int
+  luck_gte: Int
+  luck_lte: Int
+  luck_in: [Int!]
+  luck_not_in: [Int!]
+  agility: Int
+  agility_not: Int
+  agility_gt: Int
+  agility_lt: Int
+  agility_gte: Int
+  agility_lte: Int
+  agility_in: [Int!]
+  agility_not_in: [Int!]
+  vitality: Int
+  vitality_not: Int
+  vitality_gt: Int
+  vitality_lt: Int
+  vitality_gte: Int
+  vitality_lte: Int
+  vitality_in: [Int!]
+  vitality_not_in: [Int!]
+  endurance: Int
+  endurance_not: Int
+  endurance_gt: Int
+  endurance_lt: Int
+  endurance_gte: Int
+  endurance_lte: Int
+  endurance_in: [Int!]
+  endurance_not_in: [Int!]
+  dexterity: Int
+  dexterity_not: Int
+  dexterity_gt: Int
+  dexterity_lt: Int
+  dexterity_gte: Int
+  dexterity_lte: Int
+  dexterity_in: [Int!]
+  dexterity_not_in: [Int!]
+  hp: Int
+  hp_not: Int
+  hp_gt: Int
+  hp_lt: Int
+  hp_gte: Int
+  hp_lte: Int
+  hp_in: [Int!]
+  hp_not_in: [Int!]
+  mp: Int
+  mp_not: Int
+  mp_gt: Int
+  mp_lt: Int
+  mp_gte: Int
+  mp_lte: Int
+  mp_in: [Int!]
+  mp_not_in: [Int!]
+  stamina: Int
+  stamina_not: Int
+  stamina_gt: Int
+  stamina_lt: Int
+  stamina_gte: Int
+  stamina_lte: Int
+  stamina_in: [Int!]
+  stamina_not_in: [Int!]
+  strengthGrowthP: Int
+  strengthGrowthP_not: Int
+  strengthGrowthP_gt: Int
+  strengthGrowthP_lt: Int
+  strengthGrowthP_gte: Int
+  strengthGrowthP_lte: Int
+  strengthGrowthP_in: [Int!]
+  strengthGrowthP_not_in: [Int!]
+  intelligenceGrowthP: Int
+  intelligenceGrowthP_not: Int
+  intelligenceGrowthP_gt: Int
+  intelligenceGrowthP_lt: Int
+  intelligenceGrowthP_gte: Int
+  intelligenceGrowthP_lte: Int
+  intelligenceGrowthP_in: [Int!]
+  intelligenceGrowthP_not_in: [Int!]
+  wisdomGrowthP: Int
+  wisdomGrowthP_not: Int
+  wisdomGrowthP_gt: Int
+  wisdomGrowthP_lt: Int
+  wisdomGrowthP_gte: Int
+  wisdomGrowthP_lte: Int
+  wisdomGrowthP_in: [Int!]
+  wisdomGrowthP_not_in: [Int!]
+  luckGrowthP: Int
+  luckGrowthP_not: Int
+  luckGrowthP_gt: Int
+  luckGrowthP_lt: Int
+  luckGrowthP_gte: Int
+  luckGrowthP_lte: Int
+  luckGrowthP_in: [Int!]
+  luckGrowthP_not_in: [Int!]
+  agilityGrowthP: Int
+  agilityGrowthP_not: Int
+  agilityGrowthP_gt: Int
+  agilityGrowthP_lt: Int
+  agilityGrowthP_gte: Int
+  agilityGrowthP_lte: Int
+  agilityGrowthP_in: [Int!]
+  agilityGrowthP_not_in: [Int!]
+  vitalityGrowthP: Int
+  vitalityGrowthP_not: Int
+  vitalityGrowthP_gt: Int
+  vitalityGrowthP_lt: Int
+  vitalityGrowthP_gte: Int
+  vitalityGrowthP_lte: Int
+  vitalityGrowthP_in: [Int!]
+  vitalityGrowthP_not_in: [Int!]
+  enduranceGrowthP: Int
+  enduranceGrowthP_not: Int
+  enduranceGrowthP_gt: Int
+  enduranceGrowthP_lt: Int
+  enduranceGrowthP_gte: Int
+  enduranceGrowthP_lte: Int
+  enduranceGrowthP_in: [Int!]
+  enduranceGrowthP_not_in: [Int!]
+  dexterityGrowthP: Int
+  dexterityGrowthP_not: Int
+  dexterityGrowthP_gt: Int
+  dexterityGrowthP_lt: Int
+  dexterityGrowthP_gte: Int
+  dexterityGrowthP_lte: Int
+  dexterityGrowthP_in: [Int!]
+  dexterityGrowthP_not_in: [Int!]
+  strengthGrowthS: Int
+  strengthGrowthS_not: Int
+  strengthGrowthS_gt: Int
+  strengthGrowthS_lt: Int
+  strengthGrowthS_gte: Int
+  strengthGrowthS_lte: Int
+  strengthGrowthS_in: [Int!]
+  strengthGrowthS_not_in: [Int!]
+  intelligenceGrowthS: Int
+  intelligenceGrowthS_not: Int
+  intelligenceGrowthS_gt: Int
+  intelligenceGrowthS_lt: Int
+  intelligenceGrowthS_gte: Int
+  intelligenceGrowthS_lte: Int
+  intelligenceGrowthS_in: [Int!]
+  intelligenceGrowthS_not_in: [Int!]
+  wisdomGrowthS: Int
+  wisdomGrowthS_not: Int
+  wisdomGrowthS_gt: Int
+  wisdomGrowthS_lt: Int
+  wisdomGrowthS_gte: Int
+  wisdomGrowthS_lte: Int
+  wisdomGrowthS_in: [Int!]
+  wisdomGrowthS_not_in: [Int!]
+  luckGrowthS: Int
+  luckGrowthS_not: Int
+  luckGrowthS_gt: Int
+  luckGrowthS_lt: Int
+  luckGrowthS_gte: Int
+  luckGrowthS_lte: Int
+  luckGrowthS_in: [Int!]
+  luckGrowthS_not_in: [Int!]
+  agilityGrowthS: Int
+  agilityGrowthS_not: Int
+  agilityGrowthS_gt: Int
+  agilityGrowthS_lt: Int
+  agilityGrowthS_gte: Int
+  agilityGrowthS_lte: Int
+  agilityGrowthS_in: [Int!]
+  agilityGrowthS_not_in: [Int!]
+  vitalityGrowthS: Int
+  vitalityGrowthS_not: Int
+  vitalityGrowthS_gt: Int
+  vitalityGrowthS_lt: Int
+  vitalityGrowthS_gte: Int
+  vitalityGrowthS_lte: Int
+  vitalityGrowthS_in: [Int!]
+  vitalityGrowthS_not_in: [Int!]
+  enduranceGrowthS: Int
+  enduranceGrowthS_not: Int
+  enduranceGrowthS_gt: Int
+  enduranceGrowthS_lt: Int
+  enduranceGrowthS_gte: Int
+  enduranceGrowthS_lte: Int
+  enduranceGrowthS_in: [Int!]
+  enduranceGrowthS_not_in: [Int!]
+  dexterityGrowthS: Int
+  dexterityGrowthS_not: Int
+  dexterityGrowthS_gt: Int
+  dexterityGrowthS_lt: Int
+  dexterityGrowthS_gte: Int
+  dexterityGrowthS_lte: Int
+  dexterityGrowthS_in: [Int!]
+  dexterityGrowthS_not_in: [Int!]
+  hpSmGrowth: Int
+  hpSmGrowth_not: Int
+  hpSmGrowth_gt: Int
+  hpSmGrowth_lt: Int
+  hpSmGrowth_gte: Int
+  hpSmGrowth_lte: Int
+  hpSmGrowth_in: [Int!]
+  hpSmGrowth_not_in: [Int!]
+  hpRgGrowth: Int
+  hpRgGrowth_not: Int
+  hpRgGrowth_gt: Int
+  hpRgGrowth_lt: Int
+  hpRgGrowth_gte: Int
+  hpRgGrowth_lte: Int
+  hpRgGrowth_in: [Int!]
+  hpRgGrowth_not_in: [Int!]
+  hpLgGrowth: Int
+  hpLgGrowth_not: Int
+  hpLgGrowth_gt: Int
+  hpLgGrowth_lt: Int
+  hpLgGrowth_gte: Int
+  hpLgGrowth_lte: Int
+  hpLgGrowth_in: [Int!]
+  hpLgGrowth_not_in: [Int!]
+  mpSmGrowth: Int
+  mpSmGrowth_not: Int
+  mpSmGrowth_gt: Int
+  mpSmGrowth_lt: Int
+  mpSmGrowth_gte: Int
+  mpSmGrowth_lte: Int
+  mpSmGrowth_in: [Int!]
+  mpSmGrowth_not_in: [Int!]
+  mpRgGrowth: Int
+  mpRgGrowth_not: Int
+  mpRgGrowth_gt: Int
+  mpRgGrowth_lt: Int
+  mpRgGrowth_gte: Int
+  mpRgGrowth_lte: Int
+  mpRgGrowth_in: [Int!]
+  mpRgGrowth_not_in: [Int!]
+  mpLgGrowth: Int
+  mpLgGrowth_not: Int
+  mpLgGrowth_gt: Int
+  mpLgGrowth_lt: Int
+  mpLgGrowth_gte: Int
+  mpLgGrowth_lte: Int
+  mpLgGrowth_in: [Int!]
+  mpLgGrowth_not_in: [Int!]
+  mining: Int
+  mining_not: Int
+  mining_gt: Int
+  mining_lt: Int
+  mining_gte: Int
+  mining_lte: Int
+  mining_in: [Int!]
+  mining_not_in: [Int!]
+  gardening: Int
+  gardening_not: Int
+  gardening_gt: Int
+  gardening_lt: Int
+  gardening_gte: Int
+  gardening_lte: Int
+  gardening_in: [Int!]
+  gardening_not_in: [Int!]
+  foraging: Int
+  foraging_not: Int
+  foraging_gt: Int
+  foraging_lt: Int
+  foraging_gte: Int
+  foraging_lte: Int
+  foraging_in: [Int!]
+  foraging_not_in: [Int!]
+  fishing: Int
+  fishing_not: Int
+  fishing_gt: Int
+  fishing_lt: Int
+  fishing_gte: Int
+  fishing_lte: Int
+  fishing_in: [Int!]
+  fishing_not_in: [Int!]
+  profession: String
+  profession_not: String
+  profession_gt: String
+  profession_lt: String
+  profession_gte: String
+  profession_lte: String
+  profession_in: [String!]
+  profession_not_in: [String!]
+  profession_contains: String
+  profession_not_contains: String
+  profession_starts_with: String
+  profession_not_starts_with: String
+  profession_ends_with: String
+  profession_not_ends_with: String
+  passive1: String
+  passive1_not: String
+  passive1_gt: String
+  passive1_lt: String
+  passive1_gte: String
+  passive1_lte: String
+  passive1_in: [String!]
+  passive1_not_in: [String!]
+  passive1_contains: String
+  passive1_not_contains: String
+  passive1_starts_with: String
+  passive1_not_starts_with: String
+  passive1_ends_with: String
+  passive1_not_ends_with: String
+  passive2: String
+  passive2_not: String
+  passive2_gt: String
+  passive2_lt: String
+  passive2_gte: String
+  passive2_lte: String
+  passive2_in: [String!]
+  passive2_not_in: [String!]
+  passive2_contains: String
+  passive2_not_contains: String
+  passive2_starts_with: String
+  passive2_not_starts_with: String
+  passive2_ends_with: String
+  passive2_not_ends_with: String
+  active1: String
+  active1_not: String
+  active1_gt: String
+  active1_lt: String
+  active1_gte: String
+  active1_lte: String
+  active1_in: [String!]
+  active1_not_in: [String!]
+  active1_contains: String
+  active1_not_contains: String
+  active1_starts_with: String
+  active1_not_starts_with: String
+  active1_ends_with: String
+  active1_not_ends_with: String
+  active2: String
+  active2_not: String
+  active2_gt: String
+  active2_lt: String
+  active2_gte: String
+  active2_lte: String
+  active2_in: [String!]
+  active2_not_in: [String!]
+  active2_contains: String
+  active2_not_contains: String
+  active2_starts_with: String
+  active2_not_starts_with: String
+  active2_ends_with: String
+  active2_not_ends_with: String
+  statBoost1: String
+  statBoost1_not: String
+  statBoost1_gt: String
+  statBoost1_lt: String
+  statBoost1_gte: String
+  statBoost1_lte: String
+  statBoost1_in: [String!]
+  statBoost1_not_in: [String!]
+  statBoost1_contains: String
+  statBoost1_not_contains: String
+  statBoost1_starts_with: String
+  statBoost1_not_starts_with: String
+  statBoost1_ends_with: String
+  statBoost1_not_ends_with: String
+  statBoost2: String
+  statBoost2_not: String
+  statBoost2_gt: String
+  statBoost2_lt: String
+  statBoost2_gte: String
+  statBoost2_lte: String
+  statBoost2_in: [String!]
+  statBoost2_not_in: [String!]
+  statBoost2_contains: String
+  statBoost2_not_contains: String
+  statBoost2_starts_with: String
+  statBoost2_not_starts_with: String
+  statBoost2_ends_with: String
+  statBoost2_not_ends_with: String
+  statsUnknown1: String
+  statsUnknown1_not: String
+  statsUnknown1_gt: String
+  statsUnknown1_lt: String
+  statsUnknown1_gte: String
+  statsUnknown1_lte: String
+  statsUnknown1_in: [String!]
+  statsUnknown1_not_in: [String!]
+  statsUnknown1_contains: String
+  statsUnknown1_not_contains: String
+  statsUnknown1_starts_with: String
+  statsUnknown1_not_starts_with: String
+  statsUnknown1_ends_with: String
+  statsUnknown1_not_ends_with: String
+  element: String
+  element_not: String
+  element_gt: String
+  element_lt: String
+  element_gte: String
+  element_lte: String
+  element_in: [String!]
+  element_not_in: [String!]
+  element_contains: String
+  element_not_contains: String
+  element_starts_with: String
+  element_not_starts_with: String
+  element_ends_with: String
+  element_not_ends_with: String
+  statsUnknown2: String
+  statsUnknown2_not: String
+  statsUnknown2_gt: String
+  statsUnknown2_lt: String
+  statsUnknown2_gte: String
+  statsUnknown2_lte: String
+  statsUnknown2_in: [String!]
+  statsUnknown2_not_in: [String!]
+  statsUnknown2_contains: String
+  statsUnknown2_not_contains: String
+  statsUnknown2_starts_with: String
+  statsUnknown2_not_starts_with: String
+  statsUnknown2_ends_with: String
+  statsUnknown2_not_ends_with: String
+  gender: String
+  gender_not: String
+  gender_gt: String
+  gender_lt: String
+  gender_gte: String
+  gender_lte: String
+  gender_in: [String!]
+  gender_not_in: [String!]
+  gender_contains: String
+  gender_not_contains: String
+  gender_starts_with: String
+  gender_not_starts_with: String
+  gender_ends_with: String
+  gender_not_ends_with: String
+  headAppendage: String
+  headAppendage_not: String
+  headAppendage_gt: String
+  headAppendage_lt: String
+  headAppendage_gte: String
+  headAppendage_lte: String
+  headAppendage_in: [String!]
+  headAppendage_not_in: [String!]
+  headAppendage_contains: String
+  headAppendage_not_contains: String
+  headAppendage_starts_with: String
+  headAppendage_not_starts_with: String
+  headAppendage_ends_with: String
+  headAppendage_not_ends_with: String
+  backAppendage: String
+  backAppendage_not: String
+  backAppendage_gt: String
+  backAppendage_lt: String
+  backAppendage_gte: String
+  backAppendage_lte: String
+  backAppendage_in: [String!]
+  backAppendage_not_in: [String!]
+  backAppendage_contains: String
+  backAppendage_not_contains: String
+  backAppendage_starts_with: String
+  backAppendage_not_starts_with: String
+  backAppendage_ends_with: String
+  backAppendage_not_ends_with: String
+  background: String
+  background_not: String
+  background_gt: String
+  background_lt: String
+  background_gte: String
+  background_lte: String
+  background_in: [String!]
+  background_not_in: [String!]
+  background_contains: String
+  background_not_contains: String
+  background_starts_with: String
+  background_not_starts_with: String
+  background_ends_with: String
+  background_not_ends_with: String
+  hairStyle: String
+  hairStyle_not: String
+  hairStyle_gt: String
+  hairStyle_lt: String
+  hairStyle_gte: String
+  hairStyle_lte: String
+  hairStyle_in: [String!]
+  hairStyle_not_in: [String!]
+  hairStyle_contains: String
+  hairStyle_not_contains: String
+  hairStyle_starts_with: String
+  hairStyle_not_starts_with: String
+  hairStyle_ends_with: String
+  hairStyle_not_ends_with: String
+  hairColor: String
+  hairColor_not: String
+  hairColor_gt: String
+  hairColor_lt: String
+  hairColor_gte: String
+  hairColor_lte: String
+  hairColor_in: [String!]
+  hairColor_not_in: [String!]
+  hairColor_contains: String
+  hairColor_not_contains: String
+  hairColor_starts_with: String
+  hairColor_not_starts_with: String
+  hairColor_ends_with: String
+  hairColor_not_ends_with: String
+  visualUnknown1: String
+  visualUnknown1_not: String
+  visualUnknown1_gt: String
+  visualUnknown1_lt: String
+  visualUnknown1_gte: String
+  visualUnknown1_lte: String
+  visualUnknown1_in: [String!]
+  visualUnknown1_not_in: [String!]
+  visualUnknown1_contains: String
+  visualUnknown1_not_contains: String
+  visualUnknown1_starts_with: String
+  visualUnknown1_not_starts_with: String
+  visualUnknown1_ends_with: String
+  visualUnknown1_not_ends_with: String
+  eyeColor: String
+  eyeColor_not: String
+  eyeColor_gt: String
+  eyeColor_lt: String
+  eyeColor_gte: String
+  eyeColor_lte: String
+  eyeColor_in: [String!]
+  eyeColor_not_in: [String!]
+  eyeColor_contains: String
+  eyeColor_not_contains: String
+  eyeColor_starts_with: String
+  eyeColor_not_starts_with: String
+  eyeColor_ends_with: String
+  eyeColor_not_ends_with: String
+  skinColor: String
+  skinColor_not: String
+  skinColor_gt: String
+  skinColor_lt: String
+  skinColor_gte: String
+  skinColor_lte: String
+  skinColor_in: [String!]
+  skinColor_not_in: [String!]
+  skinColor_contains: String
+  skinColor_not_contains: String
+  skinColor_starts_with: String
+  skinColor_not_starts_with: String
+  skinColor_ends_with: String
+  skinColor_not_ends_with: String
+  appendageColor: String
+  appendageColor_not: String
+  appendageColor_gt: String
+  appendageColor_lt: String
+  appendageColor_gte: String
+  appendageColor_lte: String
+  appendageColor_in: [String!]
+  appendageColor_not_in: [String!]
+  appendageColor_contains: String
+  appendageColor_not_contains: String
+  appendageColor_starts_with: String
+  appendageColor_not_starts_with: String
+  appendageColor_ends_with: String
+  appendageColor_not_ends_with: String
+  backAppendageColor: String
+  backAppendageColor_not: String
+  backAppendageColor_gt: String
+  backAppendageColor_lt: String
+  backAppendageColor_gte: String
+  backAppendageColor_lte: String
+  backAppendageColor_in: [String!]
+  backAppendageColor_not_in: [String!]
+  backAppendageColor_contains: String
+  backAppendageColor_not_contains: String
+  backAppendageColor_starts_with: String
+  backAppendageColor_not_starts_with: String
+  backAppendageColor_ends_with: String
+  backAppendageColor_not_ends_with: String
+  visualUnknown2: String
+  visualUnknown2_not: String
+  visualUnknown2_gt: String
+  visualUnknown2_lt: String
+  visualUnknown2_gte: String
+  visualUnknown2_lte: String
+  visualUnknown2_in: [String!]
+  visualUnknown2_not_in: [String!]
+  visualUnknown2_contains: String
+  visualUnknown2_not_contains: String
+  visualUnknown2_starts_with: String
+  visualUnknown2_not_starts_with: String
+  visualUnknown2_ends_with: String
+  visualUnknown2_not_ends_with: String
+  assistingAuction: String
+  assistingAuction_not: String
+  assistingAuction_gt: String
+  assistingAuction_lt: String
+  assistingAuction_gte: String
+  assistingAuction_lte: String
+  assistingAuction_in: [String!]
+  assistingAuction_not_in: [String!]
+  assistingAuction_contains: String
+  assistingAuction_not_contains: String
+  assistingAuction_starts_with: String
+  assistingAuction_not_starts_with: String
+  assistingAuction_ends_with: String
+  assistingAuction_not_ends_with: String
+  assistingPrice: BigInt
+  assistingPrice_not: BigInt
+  assistingPrice_gt: BigInt
+  assistingPrice_lt: BigInt
+  assistingPrice_gte: BigInt
+  assistingPrice_lte: BigInt
+  assistingPrice_in: [BigInt!]
+  assistingPrice_not_in: [BigInt!]
+  saleAuction: String
+  saleAuction_not: String
+  saleAuction_gt: String
+  saleAuction_lt: String
+  saleAuction_gte: String
+  saleAuction_lte: String
+  saleAuction_in: [String!]
+  saleAuction_not_in: [String!]
+  saleAuction_contains: String
+  saleAuction_not_contains: String
+  saleAuction_starts_with: String
+  saleAuction_not_starts_with: String
+  saleAuction_ends_with: String
+  saleAuction_not_ends_with: String
+  salePrice: BigInt
+  salePrice_not: BigInt
+  salePrice_gt: BigInt
+  salePrice_lt: BigInt
+  salePrice_gte: BigInt
+  salePrice_lte: BigInt
+  salePrice_in: [BigInt!]
+  salePrice_not_in: [BigInt!]
+  privateAuctionProfile: String
+  privateAuctionProfile_not: String
+  privateAuctionProfile_gt: String
+  privateAuctionProfile_lt: String
+  privateAuctionProfile_gte: String
+  privateAuctionProfile_lte: String
+  privateAuctionProfile_in: [String!]
+  privateAuctionProfile_not_in: [String!]
+  privateAuctionProfile_contains: String
+  privateAuctionProfile_not_contains: String
+  privateAuctionProfile_starts_with: String
+  privateAuctionProfile_not_starts_with: String
+  privateAuctionProfile_ends_with: String
+  privateAuctionProfile_not_ends_with: String
+}
+
+enum Hero_orderBy {
+  id
+  numberId
+  owner
+  creator
+  statGenes
+  visualGenes
+  rarity
+  shiny
+  generation
+  firstName
+  lastName
+  shinyStyle
+  mainClass
+  subClass
+  summonedTime
+  nextSummonTime
+  summonerId
+  assistantId
+  summons
+  maxSummons
+  staminaFullAt
+  hpFullAt
+  mpFullAt
+  level
+  xp
+  currentQuest
+  sp
+  status
+  strength
+  intelligence
+  wisdom
+  luck
+  agility
+  vitality
+  endurance
+  dexterity
+  hp
+  mp
+  stamina
+  strengthGrowthP
+  intelligenceGrowthP
+  wisdomGrowthP
+  luckGrowthP
+  agilityGrowthP
+  vitalityGrowthP
+  enduranceGrowthP
+  dexterityGrowthP
+  strengthGrowthS
+  intelligenceGrowthS
+  wisdomGrowthS
+  luckGrowthS
+  agilityGrowthS
+  vitalityGrowthS
+  enduranceGrowthS
+  dexterityGrowthS
+  hpSmGrowth
+  hpRgGrowth
+  hpLgGrowth
+  mpSmGrowth
+  mpRgGrowth
+  mpLgGrowth
+  mining
+  gardening
+  foraging
+  fishing
+  profession
+  passive1
+  passive2
+  active1
+  active2
+  statBoost1
+  statBoost2
+  statsUnknown1
+  element
+  statsUnknown2
+  gender
+  headAppendage
+  backAppendage
+  background
+  hairStyle
+  hairColor
+  visualUnknown1
+  eyeColor
+  skinColor
+  appendageColor
+  backAppendageColor
+  visualUnknown2
+  assistingAuction
+  assistingPrice
+  saleAuction
+  salePrice
+  privateAuctionProfile
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+type Profile {
+  id: ID!
+  owner: Bytes!
+  name: String!
+  created: BigInt!
+  picId: Int!
+  heroId: BigInt!
+}
+
+input Profile_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  owner: Bytes
+  owner_not: Bytes
+  owner_in: [Bytes!]
+  owner_not_in: [Bytes!]
+  owner_contains: Bytes
+  owner_not_contains: Bytes
+  name: String
+  name_not: String
+  name_gt: String
+  name_lt: String
+  name_gte: String
+  name_lte: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  created: BigInt
+  created_not: BigInt
+  created_gt: BigInt
+  created_lt: BigInt
+  created_gte: BigInt
+  created_lte: BigInt
+  created_in: [BigInt!]
+  created_not_in: [BigInt!]
+  picId: Int
+  picId_not: Int
+  picId_gt: Int
+  picId_lt: Int
+  picId_gte: Int
+  picId_lte: Int
+  picId_in: [Int!]
+  picId_not_in: [Int!]
+  heroId: BigInt
+  heroId_not: BigInt
+  heroId_gt: BigInt
+  heroId_lt: BigInt
+  heroId_gte: BigInt
+  heroId_lte: BigInt
+  heroId_in: [BigInt!]
+  heroId_not_in: [BigInt!]
+}
+
+enum Profile_orderBy {
+  id
+  owner
+  name
+  created
+  picId
+  heroId
+}
+
+type Query {
+  profile(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): Profile
+  profiles(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Profile_orderBy
+    orderDirection: OrderDirection
+    where: Profile_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [Profile!]!
+  hero(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): Hero
+  heros(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Hero_orderBy
+    orderDirection: OrderDirection
+    where: Hero_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [Hero!]!
+  assistingAuction(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): AssistingAuction
+  assistingAuctions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AssistingAuction_orderBy
+    orderDirection: OrderDirection
+    where: AssistingAuction_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [AssistingAuction!]!
+  saleAuction(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): SaleAuction
+  saleAuctions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: SaleAuction_orderBy
+    orderDirection: OrderDirection
+    where: SaleAuction_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [SaleAuction!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
+type SaleAuction {
+  id: ID!
+  seller: Profile
+  tokenId: Hero
+  startingPrice: BigInt!
+  endingPrice: BigInt!
+  duration: BigInt!
+  startedAt: BigInt!
+  winner: Profile
+  endedAt: BigInt
+  open: Boolean!
+  purchasePrice: BigInt
+}
+
+input SaleAuction_filter {
+  id: ID
+  id_not: ID
+  id_gt: ID
+  id_lt: ID
+  id_gte: ID
+  id_lte: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  seller: String
+  seller_not: String
+  seller_gt: String
+  seller_lt: String
+  seller_gte: String
+  seller_lte: String
+  seller_in: [String!]
+  seller_not_in: [String!]
+  seller_contains: String
+  seller_not_contains: String
+  seller_starts_with: String
+  seller_not_starts_with: String
+  seller_ends_with: String
+  seller_not_ends_with: String
+  tokenId: String
+  tokenId_not: String
+  tokenId_gt: String
+  tokenId_lt: String
+  tokenId_gte: String
+  tokenId_lte: String
+  tokenId_in: [String!]
+  tokenId_not_in: [String!]
+  tokenId_contains: String
+  tokenId_not_contains: String
+  tokenId_starts_with: String
+  tokenId_not_starts_with: String
+  tokenId_ends_with: String
+  tokenId_not_ends_with: String
+  startingPrice: BigInt
+  startingPrice_not: BigInt
+  startingPrice_gt: BigInt
+  startingPrice_lt: BigInt
+  startingPrice_gte: BigInt
+  startingPrice_lte: BigInt
+  startingPrice_in: [BigInt!]
+  startingPrice_not_in: [BigInt!]
+  endingPrice: BigInt
+  endingPrice_not: BigInt
+  endingPrice_gt: BigInt
+  endingPrice_lt: BigInt
+  endingPrice_gte: BigInt
+  endingPrice_lte: BigInt
+  endingPrice_in: [BigInt!]
+  endingPrice_not_in: [BigInt!]
+  duration: BigInt
+  duration_not: BigInt
+  duration_gt: BigInt
+  duration_lt: BigInt
+  duration_gte: BigInt
+  duration_lte: BigInt
+  duration_in: [BigInt!]
+  duration_not_in: [BigInt!]
+  startedAt: BigInt
+  startedAt_not: BigInt
+  startedAt_gt: BigInt
+  startedAt_lt: BigInt
+  startedAt_gte: BigInt
+  startedAt_lte: BigInt
+  startedAt_in: [BigInt!]
+  startedAt_not_in: [BigInt!]
+  winner: String
+  winner_not: String
+  winner_gt: String
+  winner_lt: String
+  winner_gte: String
+  winner_lte: String
+  winner_in: [String!]
+  winner_not_in: [String!]
+  winner_contains: String
+  winner_not_contains: String
+  winner_starts_with: String
+  winner_not_starts_with: String
+  winner_ends_with: String
+  winner_not_ends_with: String
+  endedAt: BigInt
+  endedAt_not: BigInt
+  endedAt_gt: BigInt
+  endedAt_lt: BigInt
+  endedAt_gte: BigInt
+  endedAt_lte: BigInt
+  endedAt_in: [BigInt!]
+  endedAt_not_in: [BigInt!]
+  open: Boolean
+  open_not: Boolean
+  open_in: [Boolean!]
+  open_not_in: [Boolean!]
+  purchasePrice: BigInt
+  purchasePrice_not: BigInt
+  purchasePrice_gt: BigInt
+  purchasePrice_lt: BigInt
+  purchasePrice_gte: BigInt
+  purchasePrice_lte: BigInt
+  purchasePrice_in: [BigInt!]
+  purchasePrice_not_in: [BigInt!]
+}
+
+enum SaleAuction_orderBy {
+  id
+  seller
+  tokenId
+  startingPrice
+  endingPrice
+  duration
+  startedAt
+  winner
+  endedAt
+  open
+  purchasePrice
+}
+
+type Subscription {
+  profile(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): Profile
+  profiles(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Profile_orderBy
+    orderDirection: OrderDirection
+    where: Profile_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [Profile!]!
+  hero(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): Hero
+  heros(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: Hero_orderBy
+    orderDirection: OrderDirection
+    where: Hero_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [Hero!]!
+  assistingAuction(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): AssistingAuction
+  assistingAuctions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: AssistingAuction_orderBy
+    orderDirection: OrderDirection
+    where: AssistingAuction_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [AssistingAuction!]!
+  saleAuction(
+    id: ID!
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): SaleAuction
+  saleAuctions(
+    skip: Int = 0
+    first: Int = 100
+    orderBy: SaleAuction_orderBy
+    orderDirection: OrderDirection
+    where: SaleAuction_filter
+
+    """
+    The block at which the query should be executed. Can either be an `{ number:
+    Int }` containing the block number or a `{ hash: Bytes }` value containing a
+    block hash. Defaults to the latest block when omitted.
+    """
+    block: Block_height
+  ): [SaleAuction!]!
+
+  """Access to subgraph metadata"""
+  _meta(block: Block_height): _Meta_
+}
+
