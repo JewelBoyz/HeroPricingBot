@@ -24,7 +24,7 @@ use serde_derive::{Deserialize, Serialize};
 #[tokio::main]
 async fn main() {
     // Grab our bot token
-    let token = "OTE2NTI3ODkwMzc4NjgyNDE4.YardHQ.gZ5CQ1mNB3VP8cFCT3O4xRJKX0s";
+    let token = "";
 
     let framework = StandardFramework::new().configure(|c| {
         c.prefix("!")
