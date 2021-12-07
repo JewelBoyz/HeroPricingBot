@@ -1,5 +1,21 @@
-query ComparableDFKHerosQuery($id: Int!) {
-  heros(first: 10, where:{mainClass: "Thief"}) {
+query ComparableDFKHerosQuery($first: Int!, where:{
+    $mainClass: String,
+    $subClass: String,
+    $rarity: Int!,
+    $summons: Int!,
+    $profession: String,
+    $level: Int!,
+    $generation: Int!
+  }) {
+  heros(first: 10, where:{
+    mainClass: $mainClass, 
+    subClass: $subClass, 
+    rarity: $rarity,
+    summons: $summons,
+    profession: $profession,
+    level: $level,
+    generation: $generation
+  }) {
     id
   }
 }

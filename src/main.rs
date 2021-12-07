@@ -113,8 +113,8 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                 profession: hero_obj.profession,
                 level: hero_obj.level,
             };
-            let result = find_comparable_heroes(hero);
-            msg.reply(ctx, format!("{:?}", hero)).await?;
+            let result = find_comparable_heroes(&hero);
+            msg.reply(ctx, format!("{:?}", result)).await?;
         },
         None => {
             msg.reply(ctx, format!("Could not find hero")).await?;
@@ -156,5 +156,8 @@ pub struct Hero {
 
 // ***** Custom Functionality ***** //
 
-// Take hero response data and pipe into a new query that will:
+
+fn find_comparable_heroes(hero: &Hero) -> Vec<Hero> {
+    // Take hero response data and pipe into a new query that will:
 // 1. Search for heros hero according to similar: class, rarity, profession, number of summons, generation
+}
