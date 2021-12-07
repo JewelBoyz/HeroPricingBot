@@ -1,4 +1,4 @@
-query DFKQuery($id: Int!) {
+query InitialDFKHeroQuery($id: Int!) {
   hero(id: $id) {
     id
     summons

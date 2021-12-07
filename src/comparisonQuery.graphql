@@ -1,0 +1,5 @@
+query ComparableDFKHerosQuery($id: Int!) {
+  heros(first: 10, where:{mainClass: "Thief"}) {
+    id
+  }
+}
