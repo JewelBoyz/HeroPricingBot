@@ -1,9 +1,12 @@
 query InitialDFKHeroQuery($id: Int!) {
   hero(id: $id) {
+    mainClass
+    subClass
     id
     summons
     rarity
     profession
     level
+    generation
 	}
 }

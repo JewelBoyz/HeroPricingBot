@@ -1,0 +1,28 @@
+query ComparableDFKHerosQuery(
+  $mainClass: String, 
+  $subClass: String,
+  $rarity_gte: Int!,
+  $summons_gte: Int!,
+  $profession: String,
+  $level: Int!,
+  $generation_gte: Int!,
+) {
+  heros(first: 5,where: {
+    mainClass: $mainClass 
+    subClass: $subClass 
+    rarity_gte: $rarity_gte
+    summons_gte: $summons_gte
+    profession: $profession
+    level: $level
+    generation_gte: $generation_gte
+  }) {
+    mainClass
+    subClass
+    rarity
+    summons
+    profession
+    level
+    generation
+    id
+  }
+}

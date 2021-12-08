@@ -1,6 +1,5 @@
 #[allow(unused_imports)]
 use std::error::Error;
-#[allow(unused_imports)]
 use serenity::{
     Client, // The Client is the way to be able to start sending authenticated requests over the REST API
     client::Context, // The context is a general utility struct provided on event dispatches, which helps with dealing with the current “context” of the event dispatch
@@ -107,14 +106,89 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
     match hero_obj {
         Some(hero_obj) => {
             let hero: Hero = Hero {
+                mainClass: hero_obj.main_class,
+                subClass: hero_obj.sub_class,
                 id: hero_obj.id,
                 summons: hero_obj.summons,
                 rarity: hero_obj.rarity, // TODO: map rarity to actual string name in game
                 profession: hero_obj.profession,
                 level: hero_obj.level,
+                generation: hero_obj.generation,
             };
-            let result = find_comparable_heroes(&hero);
-            msg.reply(ctx, format!("{:?}", result)).await?;
+
+            // *** SECOND QUERY *** //
+            // Take hero response data and pipe into a new query that will:
+            // 1. Search for heros hero according to similar: class, rarity, profession, number of summons, generation
+             // The shape of the variables expected by the query.
+             //comparable_dfk_heros_query
+            let variables = comparable_dfk_heros_query::Variables {
+                main_class: Some(hero.mainClass),
+                sub_class: Some(hero.subClass),
+                rarity_gte: hero.rarity,
+                summons_gte: hero.summons,
+                profession: Some(hero.profession),
+                level: hero.level,
+                generation_gte: hero.generation,
+            };
+        
+            // Produce a GraphQL query struct that can be JSON serialized and sent to a GraphQL API
+            let request_body = ComparableDFKHerosQuery::build_query(variables);
+        
+        // ***********  POTENTIAL FUNCTION  
+            // Create a new client to send the request body to the graphql server
+            let client = reqwest::Client::new();
+        
+            // Send the request with the request body being the variables we send in parsed from the user input, 
+            //we (hopefully) get a response back and store it
+            let res = client.post("https://graph4.defikingdoms.com/subgraphs/name/defikingdoms/apiv5").json(&request_body).send().await?;
+        // ************ POTENTIAL FUNCTION 
+
+            // let's test that we didn't get a nasty server error from the graphql api
+            if res.status().is_server_error() {
+                msg.reply(ctx, format!("Received a server error from the api")).await?;
+                return Ok(());
+            };
+        
+            // Parse the response into json and pop it into this custom ResponseData struct
+            let response_body: Response<comparable_dfk_heros_query::ResponseData> = res.json().await?;
+        
+            // 
+            if response_body.data.is_none() {
+                msg.reply(ctx, format!("Nothing similar exists")).await?;
+                return Ok(());
+            };
+            let response_data = response_body.data.unwrap();
+
+            // First, lets pull stuff from the response_data
+            let comparable_heros_obj = response_data.heros;
+
+            println!("{:?}", comparable_heros_obj);
+
+            let mut heros_vec: Vec<Hero> = Vec::new();
+
+
+            for hero in comparable_heros_obj {
+                if hero.id.parse::<i64>().unwrap_or(0) == dfk_hero_id {
+                    continue;
+                }
+                heros_vec.push(Hero {
+                    mainClass: hero.main_class,
+                    subClass: hero.sub_class,
+                    rarity: hero.rarity,
+                    summons: hero.summons,
+                    profession: hero.profession,
+                    level: hero.level,
+                    generation: hero.generation,
+                    id: hero.id,
+                });
+                // msg.reply(ctx, format!(
+                // "Comparable heros based on on Hero: {:?} :\n ID: {:?}, Main Class: {:?}, Sub Class: {:?}, Profession: {:?}, Rarity: {:?}", 
+                // dfk_hero_id, hero.id, hero.main_class, hero.sub_class, hero.profession, hero.rarity)).await?;
+                
+            };
+
+            msg.reply(ctx, format!("Comparable Heros to Hero: {:#?}:\n{:#?}",dfk_hero_id ,heros_vec)).await?;
+            
         },
         None => {
             msg.reply(ctx, format!("Could not find hero")).await?;
@@ -124,6 +198,7 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
     Ok(())
 
 }
+
 
 
 // ***** GRAPHQL QUERY STUFF ***** //
@@ -139,7 +214,7 @@ pub struct InitialDFKHeroQuery;
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/schema.graphql",
-    query_path = "src/comparisonQuery",
+    query_path = "src/comparison_query.graphql",
     response_derives = "Debug, Serialize, Deserialize"
 )]
 pub struct ComparableDFKHerosQuery;
@@ -147,17 +222,12 @@ pub struct ComparableDFKHerosQuery;
 
 #[derive(Debug)]
 pub struct Hero {
-    id: String,
-    summons: i64,
+    mainClass: String,
+    subClass: String,
     rarity: i64,
+    summons: i64,
     profession: String,
-    level: i64
-}
-
-// ***** Custom Functionality ***** //
-
-
-fn find_comparable_heroes(hero: &Hero) -> Vec<Hero> {
-    // Take hero response data and pipe into a new query that will:
-// 1. Search for heros hero according to similar: class, rarity, profession, number of summons, generation
+    level: i64,
+    generation: i64,
+    id: String
 }
