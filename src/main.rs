@@ -106,8 +106,8 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
     match hero_obj {
         Some(hero_obj) => {
             let hero: Hero = Hero {
-                mainClass: hero_obj.main_class,
-                subClass: hero_obj.sub_class,
+                main_class: hero_obj.main_class,
+                sub_class: hero_obj.sub_class,
                 id: hero_obj.id,
                 summons: hero_obj.summons,
                 rarity: hero_obj.rarity, // TODO: map rarity to actual string name in game
@@ -122,8 +122,8 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
              // The shape of the variables expected by the query.
              //comparable_dfk_heros_query
             let variables = comparable_dfk_heros_query::Variables {
-                main_class: Some(hero.mainClass),
-                sub_class: Some(hero.subClass),
+                main_class: Some(hero.main_class),
+                sub_class: Some(hero.sub_class),
                 rarity_gte: hero.rarity,
                 summons_gte: hero.summons,
                 profession: Some(hero.profession),
@@ -164,26 +164,29 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 
             println!("{:?}", comparable_heros_obj);
 
-            let mut heros_vec: Vec<Hero> = Vec::new();
+            let mut heros_vec: Vec<ComparableHero> = Vec::new();
 
 
             for hero in comparable_heros_obj {
                 if hero.id.parse::<i64>().unwrap_or(0) == dfk_hero_id {
                     continue;
                 }
-                heros_vec.push(Hero {
-                    mainClass: hero.main_class,
-                    subClass: hero.sub_class,
+                if hero.sale_price.is_none() {
+                    continue;
+                }
+                
+                println!("{:?}",hero);
+                heros_vec.push(ComparableHero {
+                    main_class: hero.main_class,
+                    sub_class: hero.sub_class,
                     rarity: hero.rarity,
                     summons: hero.summons,
                     profession: hero.profession,
                     level: hero.level,
                     generation: hero.generation,
                     id: hero.id,
+                    sale_price: hero.sale_price.unwrap().parse::<i128>().unwrap_or(0)/1_000_000_000_000_000_000,
                 });
-                // msg.reply(ctx, format!(
-                // "Comparable heros based on on Hero: {:?} :\n ID: {:?}, Main Class: {:?}, Sub Class: {:?}, Profession: {:?}, Rarity: {:?}", 
-                // dfk_hero_id, hero.id, hero.main_class, hero.sub_class, hero.profession, hero.rarity)).await?;
                 
             };
 
@@ -200,8 +203,8 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 }
 
 
-
 // ***** GRAPHQL QUERY STUFF ***** //
+type BigInt = String;
 
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -216,18 +219,32 @@ pub struct InitialDFKHeroQuery;
     schema_path = "src/schema.graphql",
     query_path = "src/comparison_query.graphql",
     response_derives = "Debug, Serialize, Deserialize"
+    
 )]
 pub struct ComparableDFKHerosQuery;
 
 
 #[derive(Debug)]
 pub struct Hero {
-    mainClass: String,
-    subClass: String,
+    main_class: String,
+    sub_class: String,
     rarity: i64,
     summons: i64,
     profession: String,
     level: i64,
     generation: i64,
     id: String
+}
+
+#[derive(Debug)]
+pub struct ComparableHero {
+    main_class: String,
+    sub_class: String,
+    rarity: i64,
+    summons: i64,
+    profession: String,
+    level: i64,
+    generation: i64,
+    id: String,
+    sale_price: i128,
 }
