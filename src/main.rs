@@ -43,14 +43,32 @@ async fn main() {
 // create a struct where we'll attach our commands
 // once we've added our commands we'll enter them into the commands sub-macro
 #[group]
-#[commands(hpb)]
+#[commands(hpb, hpb_algo)]
 struct HeroPricing;
 
-// Basic structure of a command
+// Bot Algorithm Command
+#[command]
+async fn hpb_algo(ctx: &Context, msg: &Message) -> CommandResult{
+
+    msg.reply(ctx, format!("
+        Current algorithm used to find comparable heros:
+        Match hero's main class
+        Match hero's sub class
+        Match hero's profession
+        Match hero's level 
+        ^(will change in the future)
+        Rarity level >= hero's rarity
+        Summons left >= hero's rarity
+        Generation >= hero's rarity
+    ")).await?;
+
+    Ok(())
+}
+
+// Hero Pricing Bot Command
 #[command]
 async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 
-    // TODO: Need to better handle errors to send in discord
     let user_input = msg.content[4..].trim().parse::<i64>();
 
     // if the Result struct turns out to be an error, we'll tell the user to enter in a valid argument: a number
@@ -166,7 +184,6 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 
             let mut heros_vec: Vec<ComparableHero> = Vec::new();
 
-
             for hero in comparable_heros_obj {
                 if hero.id.parse::<i64>().unwrap_or(0) == dfk_hero_id {
                     continue;
@@ -190,7 +207,7 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                 
             };
 
-            msg.reply(ctx, format!("Comparable Heros to Hero: {:#?}:\n{:#?}",dfk_hero_id ,heros_vec)).await?;
+            msg.reply(ctx, format!("Comparable Heros to Hero: {:#?}:\n{:#?}", dfk_hero_id, heros_vec)).await?;
             
         },
         None => {
