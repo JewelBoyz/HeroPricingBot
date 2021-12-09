@@ -204,8 +204,11 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
 
 
 // ***** GRAPHQL QUERY STUFF ***** //
+
+// For the parsing of the BigInt type, salePrice, that comes through the graphql response
 type BigInt = String;
 
+// Create a Query struct thats translates to a graphql query
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/schema.graphql",
@@ -214,6 +217,7 @@ type BigInt = String;
 )]
 pub struct InitialDFKHeroQuery;
 
+// Create a Query struct thats translates to a graphql query
 #[derive(GraphQLQuery)]
 #[graphql(
     schema_path = "src/schema.graphql",
@@ -224,6 +228,7 @@ pub struct InitialDFKHeroQuery;
 pub struct ComparableDFKHerosQuery;
 
 
+// Structs for formatting/sanity checks
 #[derive(Debug)]
 pub struct Hero {
     main_class: String,
@@ -248,3 +253,5 @@ pub struct ComparableHero {
     id: String,
     sale_price: i128,
 }
+
+// TODO: Create a discord command to see the current algo being used to find the heros
