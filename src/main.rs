@@ -191,12 +191,24 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                 if hero.sale_price.is_none() {
                     continue;
                 }
+
+                let rarity = hero.rarity;
+                let hero_rarity_string: String;
+
+                match rarity {
+                    0 => { hero_rarity_string = String::from("Common") },
+                    1 => { hero_rarity_string = String::from("Uncommon") },
+                    2 => { hero_rarity_string = String::from("Rare") },
+                    3 => { hero_rarity_string = String::from("Legendary") },
+                    4 => { hero_rarity_string = String::from("Mythic") },
+                    _ => { hero_rarity_string = String::from("Not Specified") }
+                }
                 
                 println!("{:?}",hero);
                 heros_vec.push(ComparableHero {
                     main_class: hero.main_class,
                     sub_class: hero.sub_class,
-                    rarity: hero.rarity,
+                    rarity: hero_rarity_string,
                     summons: hero.summons,
                     profession: hero.profession,
                     level: hero.level,
@@ -262,7 +274,7 @@ pub struct Hero {
 pub struct ComparableHero {
     main_class: String,
     sub_class: String,
-    rarity: i64,
+    rarity: String,
     summons: i64,
     profession: String,
     level: i64,
@@ -270,5 +282,3 @@ pub struct ComparableHero {
     id: String,
     sale_price: i128,
 }
-
-// TODO: Create a discord command to see the current algo being used to find the heros
