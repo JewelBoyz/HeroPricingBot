@@ -4,7 +4,6 @@ query ComparableDFKHerosQuery(
   $rarity_gte: Int!,
   $summons_gte: Int!,
   $profession: String,
-  $level: Int!,
   $generation_gte: Int!,
 ) {
   heros(first: 5,where: {
@@ -13,7 +12,6 @@ query ComparableDFKHerosQuery(
     rarity_gte: $rarity_gte
     summons_gte: $summons_gte
     profession: $profession
-    level: $level
     generation_gte: $generation_gte
     saleAuction_not: null
   }) {

@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serenity = "0.10.9"
+serenity = "0.10"
 tokio = { version = "1.14.0", features = ["full"] }
 graphql_client = "0.10.0"
 # These three below are for json serialization and deserialization

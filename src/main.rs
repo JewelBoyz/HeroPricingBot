@@ -55,11 +55,9 @@ async fn hpb_algo(ctx: &Context, msg: &Message) -> CommandResult{
         Match hero's main class
         Match hero's sub class
         Match hero's profession
-        Match hero's level 
-        ^(will change in the future)
         Rarity level >= hero's rarity
-        Summons left >= hero's rarity
-        Generation >= hero's rarity
+        Summons left >= hero's summons left
+        Generation >= hero's generation
     ")).await?;
 
     Ok(())
@@ -128,9 +126,9 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                 sub_class: hero_obj.sub_class,
                 id: hero_obj.id,
                 summons: hero_obj.summons,
-                rarity: hero_obj.rarity, // TODO: map rarity to actual string name in game
-                profession: hero_obj.profession,
+                rarity: hero_obj.rarity,
                 level: hero_obj.level,
+                profession: hero_obj.profession,
                 generation: hero_obj.generation,
             };
 
@@ -145,7 +143,6 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                 rarity_gte: hero.rarity,
                 summons_gte: hero.summons,
                 profession: Some(hero.profession),
-                level: hero.level,
                 generation_gte: hero.generation,
             };
         
@@ -211,8 +208,8 @@ async fn hpb(ctx: &Context, msg: &Message) -> CommandResult{
                     rarity: hero_rarity_string,
                     summons: hero.summons,
                     profession: hero.profession,
-                    level: hero.level,
                     generation: hero.generation,
+                    level: hero.level,
                     id: hero.id,
                     sale_price: hero.sale_price.unwrap().parse::<i128>().unwrap_or(0)/1_000_000_000_000_000_000,
                 });
